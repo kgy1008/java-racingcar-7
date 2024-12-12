@@ -1,6 +1,5 @@
 package racingcar.domain.car;
 
-import java.util.ArrayList;
 import java.util.List;
 import racingcar.domain.dto.Result;
 import racingcar.domain.dto.Results;
@@ -18,15 +17,18 @@ public class Cars {
     }
 
     public Results startRace(final NumberGenerator numberGenerator) {
-        List<Result> results = new ArrayList<>();
-        for (Car car : cars) {
-            int number = getNumber(numberGenerator);
-            if (number >= MIN_NUMBER_TO_MOVE) {
-                car.move();
-            }
-            results.add(new Result(car.getName(), car.getPosition()));
-        }
+        List<Result> results = cars.stream()
+                .peek(car -> moveOrStop(numberGenerator, car))
+                .map(car -> new Result(car.getName(), car.getPosition()))
+                .toList();
         return new Results(results);
+    }
+
+    private void moveOrStop(final NumberGenerator numberGenerator, final Car car) {
+        int number = getNumber(numberGenerator);
+        if (number >= MIN_NUMBER_TO_MOVE) {
+            car.move();
+        }
     }
 
     private int getNumber(final NumberGenerator numberGenerator) {
