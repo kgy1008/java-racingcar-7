@@ -5,6 +5,7 @@ import racingcar.domain.car.Car;
 import racingcar.domain.car.CarNameParser;
 import racingcar.domain.car.Cars;
 import racingcar.domain.dto.Results;
+import racingcar.domain.dto.Winner;
 import racingcar.domain.number.NumberGenerator;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
@@ -28,6 +29,8 @@ public class RaceController {
             Results results = cars.startRace(numberGenerator);
             outputView.printResult(results);
         }
+        Winner winner = cars.findWinner();
+        outputView.printWinner(winner);
     }
 
     private Cars parseCar() {

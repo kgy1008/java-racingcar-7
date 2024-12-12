@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import racingcar.domain.dto.Result;
 import racingcar.domain.dto.Results;
+import racingcar.domain.dto.Winner;
 import racingcar.domain.number.NumberGenerator;
 
 public class Cars {
@@ -32,4 +33,18 @@ public class Cars {
         return numberGenerator.generate();
     }
 
+    public Winner findWinner() {
+        List<String> winners = cars.stream()
+                .filter(car -> car.getPosition() == findMaxPosition())
+                .map(Car::getName)
+                .toList();
+        return new Winner(winners);
+    }
+
+    private int findMaxPosition() {
+        return cars.stream()
+                .mapToInt(Car::getPosition)
+                .max()
+                .orElse(0);
+    }
 }

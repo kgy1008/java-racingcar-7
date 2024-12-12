@@ -1,6 +1,7 @@
 package racingcar.view;
 
 import racingcar.domain.dto.Results;
+import racingcar.domain.dto.Winner;
 
 public class OutputView {
 
@@ -23,5 +24,10 @@ public class OutputView {
             sb.append(STEP);
         }
         return sb.toString();
+    }
+
+    public void printWinner(final Winner winner) {
+        String winners = String.join(", ", winner.winners());
+        System.out.println("최종 우승자 : " + winners);
     }
 }
