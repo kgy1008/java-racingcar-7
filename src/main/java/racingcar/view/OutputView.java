@@ -11,11 +11,17 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public void printResult(final Results results) {
-        System.out.println("실행 결과");
+    public void printResult(final Results results, final int tryCount) {
+        printInfoMessage(tryCount);
         results.results().stream()
                 .forEach(result -> System.out.printf("%s : %s%n", result.name(), printPosition(result.position())));
         System.out.println();
+    }
+
+    private void printInfoMessage(final int tryCount) {
+        if (tryCount == 0) {
+            System.out.println("실행 결과");
+        }
     }
 
     private String printPosition(int position) {

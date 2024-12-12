@@ -25,9 +25,9 @@ public class RaceController {
     public void run() {
         Cars cars = parseCar();
         int tryCount = inputView.inputTryCount();
-        while (tryCount-- > 0) {
+        for (int i = 0; i < tryCount; i++) {
             Results results = cars.startRace(numberGenerator);
-            outputView.printResult(results);
+            outputView.printResult(results, i);
         }
         Winner winner = cars.findWinner();
         outputView.printWinner(winner);
