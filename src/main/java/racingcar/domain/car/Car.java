@@ -7,7 +7,7 @@ public class Car {
     private static final int MAX_LENGTH = 5;
 
     private final String name;
-    private final int position;
+    private int position;
 
     public Car(final String name, final int position) {
         validateName(name);
@@ -19,5 +19,17 @@ public class Car {
         if (name.length() > MAX_LENGTH) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NAME_LENGTH.getMessage());
         }
+    }
+
+    void move() {
+        position++;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    int getPosition() {
+        return position;
     }
 }
