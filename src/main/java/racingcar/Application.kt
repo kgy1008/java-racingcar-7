@@ -1,10 +1,11 @@
-package racingcar;
+package racingcar
 
-import racingcar.controller.RaceController;
+import racingcar.controller.RaceController
 
-public class Application {
-    public static void main(String[] args) {
-        final RaceController raceController = new RaceController();
-        raceController.execute();
+object Application {
+    @JvmStatic
+    fun main(args: Array<String>) {
+        val raceController = RaceController()
+        raceController.execute()
     }
 }

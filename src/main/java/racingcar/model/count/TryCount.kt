@@ -1,40 +1,39 @@
-package racingcar.model.count;
+package racingcar.model.count
 
-import racingcar.common.ErrorMessage;
+import racingcar.common.ErrorMessage
 
-public class TryCount {
-    private static final int ZERO = 0;
-    private final int tryCount;
+class TryCount(count: String) {
+    val tryCount: Int
 
-    public TryCount(final String count) {
-        final int tryCount = convertStringToInt(count);
-        validate(tryCount);
-        this.tryCount = tryCount;
+    init {
+        val tryCount = convertStringToInt(count)
+        validate(tryCount)
+        this.tryCount = tryCount
     }
 
-    private void validate(final int input) {
+    private fun validate(input: Int) {
         if (input <= ZERO) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_TRY_COUNT.getMessage());
+            throw IllegalArgumentException(ErrorMessage.INVALID_TRY_COUNT.message)
         }
     }
 
-    private int convertStringToInt(final String input) {
+    private fun convertStringToInt(input: String): Int {
         try {
-            long value = Long.parseLong(input);
-            checkOutOfIntegerRange(value);
-            return (int) value;
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_TRY_COUNT.getMessage());
+            val value = input.toLong()
+            checkOutOfIntegerRange(value)
+            return value.toInt()
+        } catch (e: NumberFormatException) {
+            throw IllegalArgumentException(ErrorMessage.INVALID_TRY_COUNT.message)
         }
     }
 
-    private void checkOutOfIntegerRange(final long input) {
-        if (input > Integer.MAX_VALUE || input < Integer.MIN_VALUE) {
-            throw new IllegalArgumentException(ErrorMessage.OUT_OF_RANGE.getMessage());
+    private fun checkOutOfIntegerRange(input: Long) {
+        if (input > Int.MAX_VALUE || input < Int.MIN_VALUE) {
+            throw IllegalArgumentException(ErrorMessage.OUT_OF_RANGE.message)
         }
     }
 
-    public int getTryCount() {
-        return tryCount;
+    companion object {
+        private const val ZERO = 0
     }
 }

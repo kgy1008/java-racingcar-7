@@ -1,66 +1,64 @@
-package racingcar.view;
+package racingcar.view
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.*
+import racingcar.model.car.Cars
+import racingcar.model.number.TestableNumber
+import racingcar.view.OutputView.printResult
+import racingcar.view.OutputView.printWinner
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.List;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import racingcar.model.car.Car;
-import racingcar.model.car.Cars;
-import racingcar.model.number.TestableNumber;
-
-class OutputViewTest {
-    private static final int MOVING_FORWARD = 5;
-    private static final int STOP = 3;
-    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+internal class OutputViewTest {
+    private val outputStream = ByteArrayOutputStream()
 
     @BeforeEach
-    void setUp() {
-        System.setOut(new PrintStream(outputStream));
+    fun setUp() {
+        System.setOut(PrintStream(outputStream))
     }
 
     @AfterEach
-    void restoresStreams() {
-        System.setOut(System.out);
+    fun restoresStreams() {
+        System.setOut(System.out)
     }
 
     @Test
     @DisplayName("단독 우승자 출력 테스트")
-    void printOneWinner() {
-        String winnerCarName = "pobi";
+    fun printOneWinner() {
+        val winnerCarName = "pobi"
 
-        OutputView.printWinner(List.of(winnerCarName));
+        printWinner(java.util.List.of(winnerCarName))
 
-        assertEquals("최종 우승자 : pobi\n", outputStream.toString());
+        Assertions.assertEquals("최종 우승자 : pobi\n", outputStream.toString())
     }
 
     @Test
     @DisplayName("다수의 우승자 출력 테스트")
-    void printMultipleWinner() {
-        List<String> winnerCarNames = List.of("pobi", "kgy", "yeoni");
+    fun printMultipleWinner() {
+        val winnerCarNames: List<String?> = listOf("pobi", "kgy", "yeoni")
 
-        OutputView.printWinner(winnerCarNames);
+        printWinner(winnerCarNames)
 
-        assertEquals("최종 우승자 : pobi, kgy, yeoni\n", outputStream.toString());
+        Assertions.assertEquals("최종 우승자 : pobi, kgy, yeoni\n", outputStream.toString())
     }
 
     @Test
     @DisplayName("자동차 결과 출력 테스트")
-    void printResultTest() {
-        Cars cars = new Cars("pobi,woni");
-        Car car1 = cars.getCars().get(0);
-        Car car2 = cars.getCars().get(1);
+    fun printResultTest() {
+        val cars = Cars("pobi,woni")
+        val car1 = cars.cars[0]
+        val car2 = cars.cars[1]
 
-        car1.goOrStop(new TestableNumber(MOVING_FORWARD));
-        car2.goOrStop(new TestableNumber(STOP));
+        car1.goOrStop(TestableNumber(MOVING_FORWARD))
+        car2.goOrStop(TestableNumber(STOP))
 
-        OutputView.printResult(cars);
+        printResult(cars)
 
-        String expectedOutput = "pobi : -\nwoni : \n\n";
-        assertEquals(expectedOutput, outputStream.toString());
+        val expectedOutput = "pobi : -\nwoni : \n\n"
+        Assertions.assertEquals(expectedOutput, outputStream.toString())
+    }
+
+    companion object {
+        private const val MOVING_FORWARD = 5
+        private const val STOP = 3
     }
 }

@@ -1,58 +1,57 @@
-package racingcar.controller;
+package racingcar.controller
 
-import java.util.List;
-import racingcar.model.car.Cars;
-import racingcar.model.count.TryCount;
-import racingcar.model.race.Racing;
-import racingcar.model.race.Winner;
-import racingcar.view.InputView;
-import racingcar.view.OutputView;
+import racingcar.model.car.Cars
+import racingcar.model.count.TryCount
+import racingcar.model.race.Racing
+import racingcar.model.race.Winner
+import racingcar.view.InputView
+import racingcar.view.OutputView
 
-public class RaceController {
-    private final TryCount tryCount;
-    private final String carNames;
+class RaceController {
+    private val tryCount: TryCount
+    private val carNames: String
 
-    public RaceController() {
-        this.carNames = inputCarNames();
-        this.tryCount = initTryCount();
+    init {
+        this.carNames = inputCarNames()
+        this.tryCount = initTryCount()
     }
 
-    public void execute() {
-        final Cars cars = new Cars(carNames);
-        final Racing racing = new Racing(cars);
-        OutputView.printResultMessage();
-        for (int i = 0; i < tryCount.getTryCount(); i++) {
-            runSingleTrial(cars, racing);
+    fun execute() {
+        val cars = Cars(carNames)
+        val racing = Racing(cars)
+        OutputView.printResultMessage()
+        for (i in 0 until tryCount.tryCount) {
+            runSingleTrial(cars, racing)
         }
-        OutputView.printWinner(findWinner(cars));
+        OutputView.printWinner(findWinner(cars))
     }
 
-    private void runSingleTrial(final Cars cars, final Racing racing) {
-        racing.start();
-        OutputView.printResult(cars);
+    private fun runSingleTrial(cars: Cars, racing: Racing) {
+        racing.start()
+        OutputView.printResult(cars)
     }
 
-    private List<String> findWinner(final Cars cars) {
-        final Winner winner = new Winner(cars);
-        return winner.find();
+    private fun findWinner(cars: Cars): List<String> {
+        val winner = Winner(cars)
+        return winner.find()
     }
 
-    private String inputCarNames() {
+    private fun inputCarNames(): String {
         try {
-            return InputView.inputCarName();
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            throw e;
+            return InputView.inputCarName()
+        } catch (e: IllegalArgumentException) {
+            OutputView.printErrorMessage(e.message)
+            throw e
         }
     }
 
-    private TryCount initTryCount() {
+    private fun initTryCount(): TryCount {
         try {
-            final String count = InputView.inputTryCount();
-            return new TryCount(count);
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            throw e;
+            val count = InputView.inputTryCount()
+            return TryCount(count)
+        } catch (e: IllegalArgumentException) {
+            OutputView.printErrorMessage(e.message)
+            throw e
         }
     }
 }

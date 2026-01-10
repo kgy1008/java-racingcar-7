@@ -1,22 +1,21 @@
-package racingcar.model.car;
+package racingcar.model.car
 
-public class Position {
-    private static final String ONE_STEP = "-";
-    private final StringBuilder distance;
+class Position internal constructor() {
+    private val distance = StringBuilder()
 
-    Position() {
-        this.distance = new StringBuilder();
+    fun increase() {
+        distance.append(ONE_STEP)
     }
 
-    void increase() {
-        distance.append(ONE_STEP);
+    fun calculateMovingDistance(): Int {
+        return distance.toString().length
     }
 
-    public int calculateMovingDistance() {
-        return distance.toString().length();
+    fun getDistance(): String {
+        return distance.toString()
     }
 
-    public String getDistance() {
-        return distance.toString();
+    companion object {
+        private const val ONE_STEP = "-"
     }
 }

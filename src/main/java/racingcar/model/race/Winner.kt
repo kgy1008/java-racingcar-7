@@ -1,29 +1,23 @@
-package racingcar.model.race;
+package racingcar.model.race
 
-import java.util.List;
-import racingcar.common.ErrorMessage;
-import racingcar.model.car.Car;
-import racingcar.model.car.Cars;
+import racingcar.common.ErrorMessage
+import racingcar.model.car.Cars
 
-public class Winner {
-    private final Cars cars;
+class Winner(private val cars: Cars) {
 
-    public Winner(final Cars cars) {
-        this.cars = cars;
+    fun find(): List<String> {
+        val maxDistance = findMaxMovingDistance()
+
+        return cars.cars
+            .filter { it.position.calculateMovingDistance() == maxDistance }
+            .map { it.getName() }
     }
 
-    public List<String> find() {
-        final int maxDistance = findMaxMovingDistance();
-        return cars.getCars().stream()
-                .filter(car -> car.getPosition().calculateMovingDistance() == maxDistance)
-                .map(Car::getName)
-                .toList();
-    }
-
-    private int findMaxMovingDistance() {
-        return cars.getCars().stream()
-                .mapToInt(car -> car.getPosition().calculateMovingDistance())
-                .max()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.CAN_NOT_CALCULATE_DISTANCE.getMessage()));
+    private fun findMaxMovingDistance(): Int {
+        return cars.cars
+            .maxOfOrNull { it.position.calculateMovingDistance() }
+            ?: throw IllegalArgumentException(
+                ErrorMessage.CAN_NOT_CALCULATE_DISTANCE.message
+            )
     }
 }

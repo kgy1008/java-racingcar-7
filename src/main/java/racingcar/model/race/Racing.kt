@@ -1,24 +1,19 @@
-package racingcar.model.race;
+package racingcar.model.race
 
-import racingcar.model.car.Cars;
-import racingcar.model.number.Number;
-import racingcar.model.number.RandomNumberGenerator;
+import racingcar.model.car.Car
+import racingcar.model.car.Cars
+import racingcar.model.number.Number
+import racingcar.model.number.RandomNumberGenerator.generate
+import java.util.function.Consumer
 
-public class Racing {
-    private final Cars cars;
-
-    public Racing(final Cars cars) {
-        this.cars = cars;
+class Racing(private val cars: Cars) {
+    fun start() {
+        cars.cars.forEach(Consumer { car: Car ->
+            val number = randomNumber
+            car.goOrStop(number)
+        })
     }
 
-    public void start() {
-        cars.getCars().forEach(car -> {
-            final Number number = getRandomNumber();
-            car.goOrStop(number);
-        });
-    }
-
-    private Number getRandomNumber() {
-        return RandomNumberGenerator.generate();
-    }
+    private val randomNumber: Number
+        get() = generate()
 }

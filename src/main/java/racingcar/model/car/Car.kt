@@ -1,45 +1,34 @@
-package racingcar.model.car;
+package racingcar.model.car
 
-import java.util.Objects;
-import racingcar.model.number.Number;
+import racingcar.model.number.Number
+import java.util.*
 
-public class Car {
-    private final Name name;
-    private final Position position;
+class Car(name: String) {
+    private val name = Name(name)
+    val position: Position = Position()
 
-    public Car(final String name) {
-        this.name = new Name(name);
-        this.position = new Position();
-    }
-
-    public void goOrStop(final Number number) {
-        if (number.isGreaterThanForwardThreshold()) {
-            position.increase();
+    fun goOrStop(number: Number) {
+        if (number.isGreaterThanForwardThreshold) {
+            position.increase()
         }
     }
 
-    public Position getPosition() {
-        return position;
+    fun getName(): String {
+        return name.name
     }
 
-    public String getName() {
-        return name.getName();
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
+    override fun equals(o: Any?): Boolean {
+        if (this === o) {
+            return true
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
+        if (o == null || javaClass != o.javaClass) {
+            return false
         }
-        final Car car = (Car) o;
-        return Objects.equals(name, car.name);
+        val car = o as Car
+        return name == car.name
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name);
+    override fun hashCode(): Int {
+        return Objects.hashCode(name)
     }
 }

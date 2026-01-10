@@ -1,39 +1,41 @@
-package racingcar.view;
+package racingcar.view
 
-import java.util.List;
-import racingcar.model.car.Car;
-import racingcar.model.car.Cars;
+import racingcar.model.car.Car
+import racingcar.model.car.Cars
 
-public class OutputView {
-    private static final String RESULT_MESSAGE = "실행 결과";
-    private static final String DETAIL = " : ";
-    private static final String DELIMITER = ", ";
-    private static final String WINNER_MESSAGE = "최종 우승자" + DETAIL;
-    private static final String ERROR_MESSAGE = "[ERROR] ";
+object OutputView {
+    private const val RESULT_MESSAGE = "실행 결과"
+    private const val DETAIL = " : "
+    private const val DELIMITER = ", "
+    private const val WINNER_MESSAGE = "최종 우승자$DETAIL"
+    private const val ERROR_MESSAGE = "[ERROR] "
 
-    private OutputView() {
+    fun printResultMessage() {
+        println(
+            """
+                
+                $RESULT_MESSAGE
+                """.trimIndent()
+        )
     }
 
-    public static void printResultMessage() {
-        System.out.println("\n" + RESULT_MESSAGE);
+    @JvmStatic
+    fun printResult(cars: Cars) {
+        cars.cars.stream()
+            .map { car: Car -> car.getName() + DETAIL + getMovingDistance(car) }
+            .forEach { x: String? -> println(x) }
+        println()
     }
 
-    public static void printResult(final Cars cars) {
-        cars.getCars().stream()
-                .map(car -> car.getName() + DETAIL + getMovingDistance(car))
-                .forEach(System.out::println);
-        System.out.println();
+    fun printWinner(winners: List<String?>) {
+        println(WINNER_MESSAGE + java.lang.String.join(DELIMITER, winners))
     }
 
-    public static void printWinner(final List<String> winners) {
-        System.out.println(WINNER_MESSAGE + String.join(DELIMITER, winners));
+    fun printErrorMessage(message: String?) {
+        println(ERROR_MESSAGE + message)
     }
 
-    public static void printErrorMessage(final String message) {
-        System.out.println(ERROR_MESSAGE + message);
-    }
-
-    private static String getMovingDistance(final Car car) {
-        return car.getPosition().getDistance();
+    private fun getMovingDistance(car: Car): String {
+        return car.position.getDistance()
     }
 }

@@ -1,45 +1,47 @@
-package racingcar.model.car;
+package racingcar.model.car
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import racingcar.model.number.TestableNumber
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import racingcar.model.number.TestableNumber;
-
-class CarTest {
-    private static final int MOVING_FORWARD = 5;
-    private static final int STOP = 3;
-    private Car car;
+internal class CarTest {
+    private var car: Car? = null
 
     @BeforeEach
-    void setUp() {
-        car = new Car("phobi");
+    fun setUp() {
+        car = Car("phobi")
     }
 
     @Test
     @DisplayName("유효한 객체 생성 테스트")
-    void createCar() {
-        assertEquals("phobi", car.getName());
+    fun createCar() {
+        Assertions.assertEquals("phobi", car!!.getName())
     }
 
     @Test
     @DisplayName("자동차가 전진 테스트")
-    void MoveForward() {
-        TestableNumber number = new TestableNumber(MOVING_FORWARD);
+    fun moveForward() {
+        val number = TestableNumber(MOVING_FORWARD)
 
-        car.goOrStop(number);
+        car!!.goOrStop(number)
 
-        assertEquals(1, car.getPosition().calculateMovingDistance());
+        Assertions.assertEquals(1, car!!.position.calculateMovingDistance())
     }
 
     @Test
     @DisplayName("자동차가 멈춤 테스트")
-    void Stop() {
-        TestableNumber number = new TestableNumber(STOP);
+    fun stop() {
+        val number = TestableNumber(STOP)
 
-        car.goOrStop(number);
+        car!!.goOrStop(number)
 
-        assertEquals(0, car.getPosition().calculateMovingDistance());
+        Assertions.assertEquals(0, car!!.position.calculateMovingDistance())
+    }
+
+    companion object {
+        private const val MOVING_FORWARD = 5
+        private const val STOP = 3
     }
 }

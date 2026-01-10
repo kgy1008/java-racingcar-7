@@ -1,26 +1,25 @@
-package racingcar.model.number;
+package racingcar.model.number
 
-import static racingcar.model.number.RandomNumberGenerator.MAX_RANDOM_NUMBER;
-import static racingcar.model.number.RandomNumberGenerator.MIN_RANDOM_NUMBER;
+import racingcar.common.ErrorMessage
 
-import racingcar.common.ErrorMessage;
+open class Number(number: Int) {
+    private val number: Int
 
-public class Number {
-    private static final int FORWARD_THRESHOLD = 4;
-    private final int number;
-
-    protected Number(final int number) {
-        validate(number);
-        this.number = number;
+    init {
+        validate(number)
+        this.number = number
     }
 
-    public boolean isGreaterThanForwardThreshold() {
-        return number >= FORWARD_THRESHOLD;
-    }
+    val isGreaterThanForwardThreshold: Boolean
+        get() = number >= FORWARD_THRESHOLD
 
-    private void validate(final int number) {
-        if (number < MIN_RANDOM_NUMBER || number > MAX_RANDOM_NUMBER) {
-            throw new IllegalArgumentException(ErrorMessage.OUT_OF_RANGE.getMessage());
+    private fun validate(number: Int) {
+        if (number < RandomNumberGenerator.MIN_RANDOM_NUMBER || number > RandomNumberGenerator.MAX_RANDOM_NUMBER) {
+            throw IllegalArgumentException(ErrorMessage.OUT_OF_RANGE.message)
         }
+    }
+
+    companion object {
+        private const val FORWARD_THRESHOLD = 4
     }
 }

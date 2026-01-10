@@ -1,16 +1,16 @@
-package racingcar.model.parser;
+package racingcar.model.parser
 
-import java.util.Arrays;
-import java.util.List;
-import racingcar.model.car.Car;
+import racingcar.model.car.Car
+import java.util.*
 
-public class CarsParser {
-    public static final String DELIMITER = ",";
+object CarsParser {
+    private const val DELIMITER: String = ","
 
-    public static List<Car> parse(final String input) {
-        final String[] carNames = input.split(DELIMITER);
+    @JvmStatic
+    fun parse(input: String): List<Car> {
+        val carNames = input.split(DELIMITER.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         return Arrays.stream(carNames)
-                .map(Car::new)
-                .toList();
+            .map { name: String? -> Car(name!!) }
+            .toList()
     }
 }
